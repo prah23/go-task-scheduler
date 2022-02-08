@@ -21,6 +21,8 @@ func ExecuteCommand(command, filePath string, wg *sync.WaitGroup, ctx context.Co
 
 	out, err := t.Command.CombinedOutput()
 
+	t.IsRunning = false
+
 	if ct.Err() == context.DeadlineExceeded {
 		t.Output = "Task timed out"
 	}
@@ -31,7 +33,6 @@ func ExecuteCommand(command, filePath string, wg *sync.WaitGroup, ctx context.Co
 	}
 
 	t.Output = string(out)
-	t.IsRunning = false
 }
 
 func StoreScriptInFile(contents []byte, taskID string) (length int, err error) {
