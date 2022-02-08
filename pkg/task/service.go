@@ -2,7 +2,6 @@ package task
 
 import (
 	"context"
-	"math"
 	"path/filepath"
 	"sync"
 	"time"
@@ -50,10 +49,16 @@ func (s service) RunTask(command string, ctx context.Context, wg *sync.WaitGroup
 	if err != nil {
 		return nil, err
 	}
-	timeoutSeconds := math.Min(float64(task.Timeout), 20.0)
+
+	var timeout uint
+	if task.Timeout > 20 {
+		timeout = 20
+	} else {
+		timeout = task.Timeout
+	}
 
 	wg.Add(1)
-	go ExecuteCommand(command, filePath, wg, ctx, task, time.Duration(timeoutSeconds))
+	go ExecuteCommand(command, filePath, wg, ctx, task, time.Duration(timeout))
 	return task, nil
 }
 
