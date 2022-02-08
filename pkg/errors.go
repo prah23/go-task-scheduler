@@ -5,5 +5,6 @@ import (
 )
 
 var (
-	ErrSomething = errors.New("something went wrong")
+	ErrSomething        = errors.New("something went wrong")
+	ErrMethodNotAllowed = errors.New("method not allowed")
 )
