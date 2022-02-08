@@ -18,7 +18,7 @@ func Success(data interface{}, statusCode int, w http.ResponseWriter) {
 func Error(data interface{}, statusCode int, w http.ResponseWriter) {
 	response := map[string]interface{}{
 		"status": "error",
-		"data":   nil,
+		"data":   data,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
